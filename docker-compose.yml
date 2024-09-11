@@ -6,8 +6,23 @@ services:
     volumes:
       - ./config:/config
       - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock
     restart: always
     privileged: true
     network_mode: host
+    labels:
+      - "diun.enable=true"
+  esphome:
+    container_name: esphome
+    image: ghcr.io/esphome/esphome
+    volumes:
+      - ./esphome_config:/config
+      - /etc/localtime:/etc/localtime:ro
+    restart: always
+    privileged: true
+    network_mode: host
+    environment:
+      - USERNAME=$USERNAME
+      - PASSWORD=$PASSWORD
     labels:
       - "diun.enable=true"
